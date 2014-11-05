@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Wonderpedia::Application.config.secret_key_base = 'f79d3f0122546b91a6c55ba563ec9f888dddde882c43065852af0bfd7bca42270bce4c9753f94ff1b9dc6907a6ee7bad91d21207033abb604abeae34d57ec607'
+Wonderpedia::Application.config.secret_key_base = ENV['SECRET_KEY_BASE']
