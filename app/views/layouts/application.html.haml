@@ -1,0 +1,25 @@
+!!!
+%html
+  %head
+    %title Wonderpedia
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  %body
+    .container
+      %ul.nav.nav-tabs
+        %li= link_to "Wonderpedia", root_path
+        %li= link_to "About", about_path
+        .pull-right.user-info
+          - if current_user
+            Hello
+            = succeed "!" do
+              %b= current_user.name || current_user.email
+            = link_to "Sign out", destroy_user_session_path, method: :delete
+          - else
+            = link_to "Sign In", new_user_session_path
+            or
+            \#{link_to "Sign Up", new_user_registration_path}
+      .flash
+        = render partial: 'layouts/flash'
+      = yield
