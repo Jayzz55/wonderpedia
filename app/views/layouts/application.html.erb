@@ -8,7 +8,27 @@
 </head>
 <body>
 
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li><%= link_to "Wonderpedia", root_path %></li>
+    <li><%= link_to "About", about_path %></li>
+    <div class="pull-right user-info">
+      <% if current_user %>
+        Hello <b><%= current_user.name || current_user.email %></b>! <%= link_to "Sign out", destroy_user_session_path, method: :delete %>
+      <% else %>
+        <%= link_to "Sign In", new_user_session_path %> or 
+        <%= link_to "Sign Up", new_user_registration_path %>
+      <% end %>
+    </div>
+    
+  </ul>
+
+  <div class="flash">
+    <%= render partial: 'layouts/flash' %>
+  </div>
+
 <%= yield %>
+</div>
 
 </body>
 </html>
