@@ -47,7 +47,7 @@ describe 'Signing process' do
     #check that user has been signed in
     expect(page).to have_content("Signed in successfully.")
     
-end
+ end
 
   it "lets user sign in and sign out" do
   
