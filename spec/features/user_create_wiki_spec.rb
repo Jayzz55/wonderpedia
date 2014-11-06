@@ -81,8 +81,82 @@ describe 'Signing process' do
   end
 end
 
-describe 'Create and mark off to do list' do
+describe 'Create wiki pages using Markdown syntax' do
   it "lets user create to-do list" do
+    #Go to home page
+    user = create(:user)
+    visit root_path
+
+    #Click sign in link
+    within '.user-info' do
+      click_link 'Sign In'
+    end
+
+    #fill in details
+    fill_in 'Email', with: user.email
+    fill_in 'Password', with: user.password
+
+    #click sign in button
+    click_button 'Log in'
+    
+    #check that user has been signed in
+    expect(page).to have_content("Signed in successfully.")
+
+    #click new wiki
+
+    #fill in title and body of the wiki
+
+    #click create button
+
+    #check that the wiki has been created
+
+  end
+
+  it "lets user create public wikis that anyone may view" do
+    #create first user to sign in
+    user1 = create(:user)
+    visit root_path
+
+    #Click sign in link
+    within '.user-info' do
+      click_link 'Sign In'
+    end
+
+    #fill in details
+    fill_in 'Email', with: user1.email
+    fill_in 'Password', with: user1.password
+
+    #click sign in button
+    click_button 'Log in'
+
+    #click new wiki
+
+    #fill in title and body of the wiki
+
+    #click create button
+
+    #check that the wiki has been created
+
+    #click sign out button
+
+    #create second user to sign in
+    user2 = create(:user)
+    visit root_path
+    within '.user-info' do
+      click_link 'Sign In'
+    end
+    fill_in 'Email', with: user2.email
+    fill_in 'Password', with: user2.password
+    click_button 'Log in'
+
+    #click new wiki
+
+    #fill in title and body of the wiki
+
+    #click create button
+
+    #check second user can see wiki created by first user
+
   end
 end
 
