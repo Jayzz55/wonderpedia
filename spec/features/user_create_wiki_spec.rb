@@ -84,6 +84,11 @@ feature 'Create wiki pages using Markdown syntax', focus: true do
 
     #check second user can see wiki created by first user
     expect(page).to have_content("Hello world")
+
+    #check the content of the wiki
+    click_link 'Hello world'
+    expect(page).to have_content("Welcome to my world")
+
   end
 end
 

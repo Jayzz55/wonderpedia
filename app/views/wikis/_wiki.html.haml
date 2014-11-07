@@ -1,7 +1,7 @@
 =content_tag :wbody, class: 'wbody', id: "wiki-#{wiki.id}" do
   %tr
     -if wiki.title
-      %td= wiki.title
+      %td= link_to (markdown wiki.title), wiki_path(wiki)
       %td= link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-success'
       %td= link_to "Delete", wiki, method: :delete, remote: true, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'}
-      %td= "Export"
+      %td= link_to "Export, "#"
