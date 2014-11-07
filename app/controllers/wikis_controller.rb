@@ -1,6 +1,8 @@
 class WikisController < ApplicationController
   respond_to :html, :js
 
+  before_action :authenticate_user!
+
   def index
     @wikis = Wiki.all
 
@@ -16,7 +18,6 @@ class WikisController < ApplicationController
   end
 
   def create
-    
     @wiki = current_user.wikis.build(wiki_params)
 
     if @wiki.save
@@ -38,6 +39,18 @@ class WikisController < ApplicationController
   end
 
   def destroy
+    @wiki = Wiki.find(params[:id])
+    authorize @wiki
+
+    if @wiki.destroy
+      flash[:notice] = "Wiki was successfully removed"
+    else
+      flash[:error] = "Wiki couldn't be deleted. Try again."
+    end
+
+    respond_with(@wiki) do |format|
+      format.html{ redirect_to wikis_path}
+    end
 
   end
 

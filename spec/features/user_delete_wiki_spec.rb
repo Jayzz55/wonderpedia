@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'Create wiki pages using Markdown syntax' do
-  scenario "lets user create to-do list" do
-    #Go to home page
-    user = create(:user)
+feature 'Deleting wiki', focus: true do
+  scenario "users can delete their own wiki" do
+    #create user to sign in
+    user1 = create(:user)
     visit root_path
 
     #Click sign in link
@@ -12,17 +12,13 @@ feature 'Create wiki pages using Markdown syntax' do
     end
 
     #fill in details
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
+    fill_in 'Email', with: user1.email
+    fill_in 'Password', with: user1.password
 
     #click sign in button
     click_button 'Log in'
-    
-    #check that user has been signed in
-    expect(page).to have_content("Signed in successfully.")
 
     #click new wiki
-    expect(current_path).to eq(wikis_path)
     click_link "Create new wiki"
 
     #fill in title and body of the wiki
@@ -35,9 +31,16 @@ feature 'Create wiki pages using Markdown syntax' do
     #check that the wiki has been created
     expect(page).to have_content("Wiki successfully created.")
 
-  end
+    #check second user can see wiki created by first user
+    expect(page).to have_content("Hello world")
 
-  scenario "lets user create public wikis that anyone may view" do
+    #click delete button to delete wiki
+    click_link 'Delete'
+    expect(page).to have_no_content("Hello world")
+
+  end
+  scenario "users cannot delete other user's wiki" do
+
     #create first user to sign in
     user1 = create(:user)
     visit root_path
@@ -85,11 +88,11 @@ feature 'Create wiki pages using Markdown syntax' do
     #check second user can see wiki created by first user
     expect(page).to have_content("Hello world")
 
-    #check the content of the wiki
-    click_link 'Hello world'
-    expect(page).to have_content("Welcome to my world")
+    #click delete button
+    click_link 'Delete'
+
+    #check the wiki is not deleted
+    expect(page).to have_content("Hello world")
 
   end
 end
-
-
