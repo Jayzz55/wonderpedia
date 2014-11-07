@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Create wiki pages using Markdown syntax' do
+feature 'Create wiki pages using Markdown syntax', focus: true do
   scenario "lets user create to-do list" do
     #Go to home page
     user = create(:user)
@@ -22,14 +22,15 @@ feature 'Create wiki pages using Markdown syntax' do
     expect(page).to have_content("Signed in successfully.")
 
     #click new wiki
-    click_button 'Create new wiki'
+    expect(current_path).to eq(wikis_path)
+    click_link "Create new wiki"
 
     #fill in title and body of the wiki
     fill_in 'title', with: "Hello world"
     fill_in 'wiki', with: "Welcome to my world"
 
     #click create button
-    click_button 'Create new wiki'
+    click_button 'Create'
 
     #check that the wiki has been created
     expect(page).to have_content("Wiki successfully created.")
@@ -54,14 +55,14 @@ feature 'Create wiki pages using Markdown syntax' do
     click_button 'Log in'
 
     #click new wiki
-    click_button 'Create new wiki'
+    click_link "Create new wiki"
 
     #fill in title and body of the wiki
     fill_in 'title', with: "Hello world"
     fill_in 'wiki', with: "Welcome to my world"
 
     #click create button
-    click_button 'Create new wiki'
+    click_button 'Create'
 
     #check that the wiki has been created
     expect(page).to have_content("Wiki successfully created.")
@@ -83,7 +84,6 @@ feature 'Create wiki pages using Markdown syntax' do
 
     #check second user can see wiki created by first user
     expect(page).to have_content("Hello world")
-    expect(page).to have_content("Welcome to my world")
   end
 end
 

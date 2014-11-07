@@ -1,0 +1,16 @@
+.row
+  .col-md-2
+  .col-md-8
+    %h2 My wikis
+    %table.table.js-todos.table-striped
+      %thead
+        %tr
+          %th Title
+          %th Edit
+          %th Delete
+          %th Collaborate
+      =render partial: 'wikis/wiki', collection: @wikis
+
+    %p
+      %a.btn.btn-primary.btn-lg{href: new_wiki_path, role: "button"} Create new wiki
+  .col-md-2
