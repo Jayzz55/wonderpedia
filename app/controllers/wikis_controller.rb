@@ -18,9 +18,9 @@ class WikisController < ApplicationController
   end
 
   def create
-    @wiki = current_user.wikis.build(wiki_params)
+    @wiki = current_user.wikis.create(wiki_params)
 
-    if @wiki.save
+    if @wiki.persisted?
       flash[:notice] = "Wiki successfully created."
     else
       flash[:error] = "There was an error creating the wiki. Please try again."

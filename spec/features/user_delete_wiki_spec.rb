@@ -92,7 +92,7 @@ feature 'Deleting wiki', focus: true do
     click_link 'Delete'
 
     #check the wiki is not deleted
-    expect(page).to have_content("Hello world")
+    expect(page).to have_content("not allowed")
 
   end
 end
