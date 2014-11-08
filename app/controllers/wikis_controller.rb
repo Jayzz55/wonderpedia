@@ -33,9 +33,24 @@ class WikisController < ApplicationController
   end
 
   def edit
+    @wiki = Wiki.find(params[:id])
+    authorize @wiki
+
   end
 
   def update
+    @wiki = Wiki.find(params[:id])
+    authorize @wiki
+
+    if @wiki.update_attributes(wiki_params)
+      flash[:notice] = "Wiki successfully updated."
+    else
+      flash[:error] = "There was an error updating the wiki. Please try again."
+    end
+
+    respond_with(@wiki) do |format|
+      format.html { redirect_to wikis_path}
+    end
   end
 
   def destroy

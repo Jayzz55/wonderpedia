@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Deleting wiki', focus: true do
+feature 'Deleting wiki' do
   scenario "users can delete their own wiki" do
     #create user to sign in
     user1 = create(:user)
@@ -26,12 +26,12 @@ feature 'Deleting wiki', focus: true do
     fill_in 'wiki', with: "Welcome to my world"
 
     #click create button
-    click_button 'Create'
+    click_button 'Save'
 
     #check that the wiki has been created
     expect(page).to have_content("Wiki successfully created.")
 
-    #check second user can see wiki created by first user
+    #check that user can see the created wiki
     expect(page).to have_content("Hello world")
 
     #click delete button to delete wiki
@@ -65,7 +65,7 @@ feature 'Deleting wiki', focus: true do
     fill_in 'wiki', with: "Welcome to my world"
 
     #click create button
-    click_button 'Create'
+    click_button 'Save'
 
     #check that the wiki has been created
     expect(page).to have_content("Wiki successfully created.")
