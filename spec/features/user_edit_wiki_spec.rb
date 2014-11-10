@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'Editing wiki', focus: true do
+feature 'Editing wiki' do
   scenario "users can edit their own wiki" do
     #create user to sign in
     user1 = create(:user)

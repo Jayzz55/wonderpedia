@@ -7,4 +7,9 @@ class User < ActiveRecord::Base
   has_many :wikis, through: :collaborators
   has_many :collaborators
 
+
+  def user_status
+    self.premium == true ? "Premium user" : "Regular user"
+  end
+
 end
