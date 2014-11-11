@@ -4,7 +4,7 @@ class WikisController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @wikis = Wiki.all
+    @wikis = Wiki.viewable(current_user)
 
   end
 
@@ -72,6 +72,6 @@ class WikisController < ApplicationController
   private
 
   def wiki_params
-    params.require(:wiki).permit(:title, :body)
+    params.require(:wiki).permit(:title, :body, :private)
   end
 end

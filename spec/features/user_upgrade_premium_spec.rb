@@ -20,6 +20,7 @@ feature 'Upgrade to premium',js: true do
     expect(page).to have_content("Signed in successfully.")
 
     #Click link to upgrade membership
+    expect(page).to have_no_content("Premium user")
     within '.user-info' do
       click_link 'Upgrade membership'
     end
@@ -30,17 +31,17 @@ feature 'Upgrade to premium',js: true do
 
     #fill in details
     Capybara.within_frame 'stripe_checkout_app' do
-      fill_in 'Email', :with => 'persona@example.com'
-      fill_in "Card number", :with => "4242424242424242"
-      fill_in 'CVC', :with => '123'
-      fill_in 'MM / YY', :with => '11/14'
+      fill_in 'Email', with: user1.email
+      fill_in "Card number", with: "4242424242424242"
+      fill_in 'CVC', with: '123'
+      fill_in 'MM / YY', with: '11/14'
 
       click_button 'Pay $15.00'
     end
     sleep 60
 
     #Check that user has paid and upgraded to premium
-    expect(page).to have_content("Thanks for all the money")
+    expect(page).to have_content("Thanks for all the money, #{user1.email}! Feel free to pay me again.")
     expect(page).to have_content("Premium user")
 
   end

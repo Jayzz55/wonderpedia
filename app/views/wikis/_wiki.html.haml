@@ -3,6 +3,8 @@
     -if wiki.title
       %td= link_to (markdown wiki.title), wiki_path(wiki)
       %td= link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-success'
-      %td= link_to "Delete", wiki, method: :delete, remote: true, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'}
-      %td= link_to "Export "#"
-      %td= wiki.users.first.name
+      %td= link_to "Delete", wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'}
+      %td
+        = wiki.users.first.name
+        %br
+        %small= "created #{time_ago_in_words(wiki.created_at)} ago"

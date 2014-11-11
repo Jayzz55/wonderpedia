@@ -1,22 +1,14 @@
 require 'rails_helper'
 
-feature 'Editing wiki' do
+include Warden::Test::Helpers
+Warden.test_mode!
+
+feature 'Editing wiki'do
   scenario "users can edit their own wiki" do
-    #create user to sign in
+    #create user1 to sign in
     user1 = create(:user)
-    visit root_path
-
-    #Click sign in link
-    within '.user-info' do
-      click_link 'Sign In'
-    end
-
-    #fill in details
-    fill_in 'Email', with: user1.email
-    fill_in 'Password', with: user1.password
-
-    #click sign in button
-    click_button 'Log in'
+    login_as(user1, :scope => :user)
+    visit wikis_path
 
     #click new wiki
     click_link "Create new wiki"
@@ -45,25 +37,14 @@ feature 'Editing wiki' do
     #check that user can see the updated wiki
     click_link "Hello world"
     expect(page).to have_content("Where are we in here?")
-
   end
+
   scenario "users cannot delete other user's wiki" do
 
-    #create first user to sign in
+    #create user1 to sign in
     user1 = create(:user)
-    visit root_path
-
-    #Click sign in link
-    within '.user-info' do
-      click_link 'Sign In'
-    end
-
-    #fill in details
-    fill_in 'Email', with: user1.email
-    fill_in 'Password', with: user1.password
-
-    #click sign in button
-    click_button 'Log in'
+    login_as(user1, :scope => :user)
+    visit wikis_path
 
     #click new wiki
     click_link "Create new wiki"
@@ -85,13 +66,8 @@ feature 'Editing wiki' do
 
     #create second user to sign in
     user2 = create(:user)
-    visit root_path
-    within '.user-info' do
-      click_link 'Sign In'
-    end
-    fill_in 'Email', with: user2.email
-    fill_in 'Password', with: user2.password
-    click_button 'Log in'
+    login_as(user2, :scope => :user)
+    visit wikis_path
 
     #check second user can see wiki created by first user
     expect(page).to have_content("Hello world")
