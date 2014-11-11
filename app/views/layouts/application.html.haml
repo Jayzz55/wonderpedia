@@ -19,7 +19,7 @@
             -if current_user.premium == true
               = "(#{current_user.user_status}) "
             -else
-              = link_to "Upgrade membership", new_charge_path
+              = link_to "Upgrade membership", new_charge_path, 'data-no-turbolink' => true
             = link_to "Sign out", destroy_user_session_path, method: :delete
           - else
             = link_to "Sign In", new_user_session_path

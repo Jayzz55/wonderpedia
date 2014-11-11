@@ -26,14 +26,20 @@ RSpec.configure do |config|
   config.include(EmailSpec::Matchers)
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner[:active_record].strategy = :transaction
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around(:each) do |example|
-    DatabaseCleaner.cleaning do
-      example.run
-    end
+  config.before(:each, js: true) do
+    # For JavaScript tests ensure we're not using transactions as they're
+    # not shared into the phantomjs thread.
+    # http://www.railsonmaui.com/tips/rails/capybara-phantomjs-poltergeist-rspec-rails-tips.html
+    # http://devblog.avdi.org/2012/08/31/configuring-database_cleaner-with-rails-rspec-capybara-and-selenium/
+    DatabaseCleaner[:active_record].strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
   end
   
   # rspec-expectations config goes here. You can use an alternate
