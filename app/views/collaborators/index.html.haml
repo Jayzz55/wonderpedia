@@ -1,0 +1,19 @@
+.row
+  .col-md-2
+  .col-md-8
+    %h2= "Add Collaborators to the '#{@wiki.title}' wiki (showing all users)"
+    = form_for [@wiki,@collaborator] do |f|
+      %table.table.js-todos
+        %thead
+          %tr
+            %th Name
+            %th Email
+            %th Give Access
+            - @user.each do |user|
+              %tr
+                %td= user.name
+                %td= user.email
+                %td
+                  %input{:id => "collaborator_#{user.id}", :name => "collaborators[]", :type => "checkbox", :value => user.id}/
+      = f.submit "Share wiki", class: 'btn btn-primary'
+  .col-md-2

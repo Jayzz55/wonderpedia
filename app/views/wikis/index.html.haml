@@ -8,7 +8,9 @@
           %th Title
           %th Edit
           %th Delete
-          %th Createdy by
+          -if current_user.premium == true
+            %th Set status
+            %th Share
       =render partial: 'wikis/wiki', collection: @wikis
 
     %p

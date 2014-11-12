@@ -3,7 +3,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature 'Create private wiki', focus: true do
+feature 'Create private wiki' do
   scenario "premium users can create private wiki" do
     #create premium user1 to sign in
     user1 = create(:user, premium: true)

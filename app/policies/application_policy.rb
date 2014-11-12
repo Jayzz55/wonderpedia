@@ -27,11 +27,11 @@ class ApplicationPolicy
   end
 
   def edit?
-    update?
+    update? 
   end
 
   def destroy?
-    update?
+    user.present? && (record.users.first == user)
   end
 
   def scope

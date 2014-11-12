@@ -10,4 +10,9 @@ class Wiki < ActiveRecord::Base
     public_wiki = Wiki.where(:private => false)
     return select_wiki + public_wiki
   end
+
+  def premium_access?(user)
+    user.premium == true && self.users.first == user
+  end
+  
 end

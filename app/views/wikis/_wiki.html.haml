@@ -1,10 +1,27 @@
 =content_tag :wbody, class: 'wbody', id: "wiki-#{wiki.id}" do
   %tr
-    -if wiki.title
-      %td= link_to (markdown wiki.title), wiki_path(wiki)
-      %td= link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-success'
-      %td= link_to "Delete", wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'}
-      %td
-        = wiki.users.first.name
+    %td
+      = link_to (markdown wiki.title), wiki_path(wiki)
+      %small
+        = "created by: #{wiki.users.first.name}"
         %br
-        %small= "created #{time_ago_in_words(wiki.created_at)} ago"
+        = "#{time_ago_in_words(wiki.created_at)} ago"
+    %td
+      -if policy(wiki).edit?
+        = link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-success'
+    %td
+      -if policy(wiki).destroy?
+        = link_to "Delete", wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'}
+    %td
+      -if wiki.premium_access?(current_user)
+        - if wiki.private == false
+          = link_to wikis_path(wiki, private: true), class: 'btn btn-primary', method: :put do
+            %i.glyphicon.glyphicon-star-empty>
+            \  Public 
+        - else
+          = link_to wikis_path(wiki, private: false), class: 'btn btn-success', method: :put do
+            %i.glyphicon.glyphicon-star>
+            \  Private
+      %td
+        -if wiki.premium_access?(current_user)
+          =link_to "Collaborate",wiki_collaborators_path(wiki), class: 'btn btn-primary'
