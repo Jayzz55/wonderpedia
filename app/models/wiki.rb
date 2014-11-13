@@ -14,5 +14,19 @@ class Wiki < ActiveRecord::Base
   def premium_access?(user)
     user.premium == true && self.users.first == user
   end
+
+  def check_exist?(user)
+    if self.users.include? user
+      return true
+    else
+      return false
+    end
+  end
+
+  def collaborators_name
+    name =[]
+    self.users.each{|u| name << u.name}
+    return name.join(',')
+  end
   
 end

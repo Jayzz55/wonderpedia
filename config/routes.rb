@@ -3,9 +3,9 @@ Wonderpedia::Application.routes.draw do
 
   resources :users, only: [:update]
   resources :wikis do
-    resources :collaborators, only: [:index, :new, :create, :update] do
+    resources :collaborators, only: [:index] do
       collection do
-        delete 'destroy_multiple'
+        put 'update_multiple'
       end
     end
   end

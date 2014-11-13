@@ -15,13 +15,9 @@
     %td
       -if wiki.premium_access?(current_user)
         - if wiki.private == false
-          = link_to wikis_path(wiki, private: true), class: 'btn btn-primary', method: :put do
-            %i.glyphicon.glyphicon-star-empty>
-            \  Public 
+          .label.label-info Public 
         - else
-          = link_to wikis_path(wiki, private: false), class: 'btn btn-success', method: :put do
-            %i.glyphicon.glyphicon-star>
-            \  Private
+          .label.label-success Private
       %td
         -if wiki.premium_access?(current_user)
           =link_to "Collaborate",wiki_collaborators_path(wiki), class: 'btn btn-primary'

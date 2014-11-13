@@ -1,9 +1,10 @@
 .row
   .col-md-2
   .col-md-8
+    %h3= "Current collaborators : #{@wiki.collaborators_name}"
     %h2= "Add Collaborators to the '#{@wiki.title}' wiki (showing all users)"
-    = form_for [@wiki,@collaborator] do |f|
-      %table.table.js-todos
+    = form_tag update_multiple_wiki_collaborators_path, method: :put do
+      %table.table#wiki_collaborator
         %thead
           %tr
             %th Name
@@ -14,6 +15,9 @@
                 %td= user.name
                 %td= user.email
                 %td
-                  %input{:id => "collaborator_#{user.id}", :name => "collaborators[]", :type => "checkbox", :value => user.id}/
-      = f.submit "Share wiki", class: 'btn btn-primary'
+                  - value = user.id
+                  - is_checked = @wiki.check_exist?(user)
+                  - options = { id: "user_#{user.id}" }
+                  = check_box_tag "users[]", value, is_checked, options
+      = submit_tag "Share wiki", class: 'btn btn-primary'
   .col-md-2
