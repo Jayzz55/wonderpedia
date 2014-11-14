@@ -7,10 +7,11 @@
         %br
         = "#{time_ago_in_words(wiki.created_at)} ago"
     %td
-      - if wiki.private == false
-        .label.label-info Public 
-      - else
-        .label.label-success Private
+      .wiki_status
+        - if wiki.private == false
+          .label.label-info Public 
+        - else
+          .label.label-primary Private
     %td
       -if policy(wiki).edit?
         = link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-success'

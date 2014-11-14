@@ -49,7 +49,7 @@
     <% if current_user.premium == true %>
       <h4> <b> Premium user </b></h4>
     <% else %>
-      <%= link_to "Upgrade membership", new_charge_path %>
+      <%= link_to "Upgrade membership", new_charge_path, 'data-no-turbolink' => true %>
     <% end %>
 
     <h3>Cancel my account</h3>
