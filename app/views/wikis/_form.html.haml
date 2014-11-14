@@ -14,3 +14,12 @@
       %p.help-block Set this as a private wiki
 
   =f.submit "Save", class: 'btn btn-success'
+
+%script{:charset => "utf-8", :type => "text/javascript"}
+  var opts = {
+  theme: {
+  base: '/assets/base/epiceditor.css',
+  editor: '/assets/editor/epic-dark.css'
+  }
+  };
+  var editor = new EpicEditor(opts).load();
