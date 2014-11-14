@@ -3,7 +3,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature 'Editing wiki'do
+feature 'Editing wiki' do
   scenario "users can edit their own wiki" do
     #create user1 to sign in
     user1 = create(:user)
@@ -39,7 +39,7 @@ feature 'Editing wiki'do
     expect(page).to have_content("Where are we in here?")
   end
 
-  scenario "users cannot delete other user's wiki" do
+  scenario "users cannot edit or delete other user's wiki" do
 
     #create user1 to sign in
     user1 = create(:user)
@@ -72,11 +72,11 @@ feature 'Editing wiki'do
     #check second user can see wiki created by first user
     expect(page).to have_content("Hello world")
 
-    #click edit button
-    click_link 'Edit'
+    #user2 don't have access to edit wiki
+    expect(page).not_to have_link("Edit")
 
-    #check the wiki is not deleted
-    expect(page).to have_content("not allowed")
+    #user2 don't have access to delete wiki
+    expect(page).not_to have_link("Delete")
 
   end
 end

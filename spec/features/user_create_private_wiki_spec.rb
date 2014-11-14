@@ -30,7 +30,7 @@ feature 'Create private wiki' do
     login_as(user2, :scope => :user)
     visit wikis_path
 
-    #check user1 is premium user
+    #check user2 is premium user
     expect(page).to have_content("Premium user")
 
     #create private wiki

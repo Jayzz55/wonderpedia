@@ -7,17 +7,16 @@
         %br
         = "#{time_ago_in_words(wiki.created_at)} ago"
     %td
+      - if wiki.private == false
+        .label.label-info Public 
+      - else
+        .label.label-success Private
+    %td
       -if policy(wiki).edit?
         = link_to "Edit", edit_wiki_path(wiki), class: 'btn btn-success'
     %td
       -if policy(wiki).destroy?
         = link_to "Delete", wiki, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'}
-    %td
-      -if wiki.premium_access?(current_user)
-        - if wiki.private == false
-          .label.label-info Public 
-        - else
-          .label.label-success Private
       %td
         -if wiki.premium_access?(current_user)
           =link_to "Collaborate",wiki_collaborators_path(wiki), class: 'btn btn-primary'

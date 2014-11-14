@@ -6,10 +6,10 @@
       %thead
         %tr
           %th Title
+          %th status
           %th Edit
           %th Delete
           -if current_user.premium == true
-            %th Set status
             %th Share
       =render partial: 'wikis/wiki', collection: @wikis
 

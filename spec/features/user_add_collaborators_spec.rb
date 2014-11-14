@@ -3,9 +3,9 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature 'Add collaborators', focus: true do
+feature 'Add collaborators' do
   scenario "users can add collaborators on a wiki" do
-    #create user1 as premium, and user 2,3, and 4 as normal user
+    #create user1 as premium, and user2,3, and 4 as normal user
     user1 = create(:user, premium: true)
     user2 = create(:user)
     user3 = create(:user)
@@ -15,12 +15,15 @@ feature 'Add collaborators', focus: true do
     login_as(user1, :scope => :user)
     visit wikis_path
 
-    #create a new wiki and access the wiki
+    #create a new private wiki
     click_link "Create new wiki"
     fill_in 'title', with: "Hello world"
     fill_in 'wiki', with: "Welcome to my world"
+    check 'private'
     click_button 'Save'
     expect(current_path).to eq(wikis_path)
+
+    #click link to add collaborators
     click_link "Collaborate"
 
     #check that users are in collaborator list
@@ -38,9 +41,9 @@ feature 'Add collaborators', focus: true do
 
     #check that user2 and user3 have been added as collaborators
     expect(page).to have_content("Collaborators successfully updated.")
-    page.has_checked_field?("#user_2").should be(true)
-    page.has_checked_field?("#user_3").should be(true)
-    page.has_checked_field?("#user_4").should be(false)
+    expect(page).to have_checked_field("user_2")
+    expect(page).to have_checked_field("user_3")
+    expect(page).not_to have_checked_field("user_4")
 
   end
 end
