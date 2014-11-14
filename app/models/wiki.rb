@@ -4,6 +4,9 @@ class Wiki < ActiveRecord::Base
 
   default_scope { order('created_at DESC') }
 
+  validates :body, length: { minimum: 5 }, presence: true
+  validates :title, length: { minimum: 5 }, presence: true
+
   def self.viewable(user)
     wiki_collab = Collaborator.where(user_id: user.id)
     select_wiki = Wiki.where(id: wiki_collab.pluck(:wiki_id), :private => true)

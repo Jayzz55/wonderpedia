@@ -3,7 +3,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature 'Users collaborate on wiki', focus: true do
+feature 'Users collaborate on wiki' do
   scenario "authorized users can colloborate on wiki" do
 
     #create user1 as premium, and user2 as normal user
