@@ -81,3 +81,5 @@ gem 'bootstrap-sass', '~> 3.1.1'
 gem "haml-rails"
 
 gem 'stripe'
+
+gem 'friendly_id', '~> 5.0.0'

@@ -2,9 +2,11 @@
   .form-group
     =f.label :title, 'title'
     =f.text_field :title, class: 'form-control', placeholder: "Enter wiki title"
+  
   .form-group
     =f.label :body, 'wiki'
-    =f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki description"
+    #epiceditor
+      =f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki description"
   -if current_user.premium == true  
     .form-group
       =f.label :private, 'private'
