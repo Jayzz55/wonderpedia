@@ -88,11 +88,8 @@ feature 'Deleting wiki' do
     #check second user can see wiki created by first user
     expect(page).to have_content("Hello world")
 
-    #click delete button
-    click_link 'Delete'
-
-    #check the wiki is not deleted
-    expect(page).to have_content("not allowed")
+    #check that the create wiki has no delete button
+    expect(page).not_to have_link("Delete")
 
   end
 end

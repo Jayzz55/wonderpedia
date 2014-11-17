@@ -326,7 +326,7 @@
       , _defaultFileSchema
       , _defaultFile
       , defaults = { container: 'epiceditor'
-        , basePath: ''
+        , basePath: 'epiceditor'
         , textarea: undefined
         , clientSideStorage: true
         , localStorageName: 'epiceditor'
@@ -335,9 +335,9 @@
         , defaultContent: ''
           , autoSave: 100 // Set to false for no auto saving
           }
-        , theme: { base: '<%= asset_path("base/epiceditor.css") %>'
-          , preview: '<%= asset_path("preview/github.css") %>'
-          , editor: '<%= asset_path("editor/epic-light.css") %>'
+        , theme: { base: '/themes/base/epiceditor.css'
+          , preview: '/themes/preview/github.css'
+          , editor: '/themes/editor/epic-dark.css'
           }
         , focusOnLoad: false
         , shortcut: { modifier: 18 // alt keycode

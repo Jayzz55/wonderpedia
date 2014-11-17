@@ -2,13 +2,13 @@ class CollaboratorsController < ApplicationController
   respond_to :html, :js
 
   def index
-    @wiki = Wiki.find(params[:wiki_id])
+    @wiki = Wiki.friendly.find(params[:wiki_id])
     @collaborator = @wiki.collaborators
     @user = User.where.not(id: current_user.id)
   end
 
   def update_multiple
-    wiki = Wiki.find(params[:wiki_id])
+    wiki = Wiki.friendly.find(params[:wiki_id])
     captured_params = params[:users]
 
     wiki.checkbox_processing(captured_params, current_user)
