@@ -14,7 +14,7 @@ Created by : Jaya Wijono as part of [Bloc](http://bloc.io) apprenticeship.
 * **gem "haml-rails"** : Using easy haml syntax instead of erb
 * **gem 'stripe'** : Integrating Stripe payment system
 * **gem 'friendly_id', '~> 5.0.0'** : For a friendlier url page
-* **Epic Editor V.0.2.2 ** : An Embeddable JavaScript Markdown Editor
+* **Epic Editor V.0.2.2** : An Embeddable JavaScript Markdown Editor
 
 ***Testing Resources***:
 * **gem 'email_spec'** : For testing the email mailer
