@@ -22,8 +22,8 @@
   basePath: '',
   textarea: "wiki_body",
   theme: {
-  base: '<%= asset_path("base/epiceditor.css") %>',
-  editor: '<%= asset_path("editor/epic-dark.css") %>'
+  base: '#{asset_path("base/epiceditor.css")}',
+  editor: '#{asset_path("editor/epic-dark.css")}'
   }
   };
   var editor = new EpicEditor(opts).load();
