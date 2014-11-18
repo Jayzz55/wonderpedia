@@ -1,6 +1,8 @@
 require 'rails_helper'
 
-feature 'Upgrade to premium',js: true do
+Capybara.default_wait_time = 60
+
+feature 'Upgrade to premium',js: true, focus: true do
   scenario "users can upgrade to premium" do
     #create first user to sign in
     user1 = create(:user)
@@ -27,7 +29,10 @@ feature 'Upgrade to premium',js: true do
     
     #Click pay now button
     find_button('Pay with Card').click()
-    sleep 30
+
+    Capybara.within_frame 'stripe_checkout_app'do
+    find 'body' # Waits for iframe body to load.
+    end
 
     #fill in details
     Capybara.within_frame 'stripe_checkout_app' do
@@ -38,7 +43,6 @@ feature 'Upgrade to premium',js: true do
 
       click_button 'Pay $15.00'
     end
-    sleep 60
 
     #Check that user has paid and upgraded to premium
     expect(page).to have_content("Thanks for all the money, #{user1.email}! Feel free to pay me again.")

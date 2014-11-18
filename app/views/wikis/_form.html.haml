@@ -6,6 +6,7 @@
   .form-group
     =f.label :body, 'wiki'
     #epiceditor
+    .hidden
       =f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter wiki description"
   -if current_user.premium == true  
     .form-group
@@ -17,10 +18,12 @@
 
 %script{:charset => "utf-8", :type => "text/javascript"}
   var opts = {
+  container: 'epiceditor',
   basePath: '',
+  textarea: "wiki_body",
   theme: {
-  base: '/assets/base/epiceditor.css',
-  editor: '/assets/editor/epic-dark.css'
+  base: '<%= asset_path("base/epiceditor.css") %>',
+  editor: '<%= asset_path("editor/epic-dark.css") %>'
   }
   };
   var editor = new EpicEditor(opts).load();
