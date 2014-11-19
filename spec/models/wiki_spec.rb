@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Wiki, focus: true do
+describe Wiki do
   before do
     @user1 = create(:user, premium: true)
     @user2 = create(:user) 
