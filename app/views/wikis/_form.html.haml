@@ -20,11 +20,12 @@
   var opts = {
   container: 'epiceditor',
   basePath: '',
-  localStorageName: 'epiceditor #{current_user} #{wiki}',
+  localStorageName: 'epiceditor_#{current_user.name}_#{wiki.slug}',
   textarea: "wiki_body",
   theme: {
   base: '#{asset_path("base/epiceditor.css")}',
-  editor: '#{asset_path("editor/epic-dark.css")}'
+  editor: '#{asset_path("editor/epic-dark.css")}',
+  preview: '#{asset_path("preview/github.css")}'
   }
   };
   var editor = new EpicEditor(opts).load();
