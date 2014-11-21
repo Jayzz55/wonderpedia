@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Upgrade to premium',js: true do
-  scenario "users can upgrade to premium", focus: true do
+  scenario "users can upgrade to premium" do
     #create first user to sign in
     user1 = create(:user)
     visit root_path
