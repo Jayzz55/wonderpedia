@@ -26,9 +26,10 @@ feature 'Editing wiki' do
     #check that user can see the created wiki
     expect(page).to have_content("Hello world")
 
-    #click delete button to edit wiki
+    #click update button to edit wiki
     click_link 'Edit'
-    find_field('wiki').should have_content("Welcome to my world")
+    wiki_field = find_field('wiki')
+    expect(wiki_field).to have_content("Welcome to my world")
 
     #edit and update the wiki
     fill_in('wiki', :with => "Where are we in here?")
