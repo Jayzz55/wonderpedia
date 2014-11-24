@@ -9,7 +9,7 @@
           %th status
           %th Edit
           %th Delete
-          -if current_user.premium == true
+          -if current_user.premium
             %th Share
       =render partial: 'wikis/wiki', collection: @wikis
 

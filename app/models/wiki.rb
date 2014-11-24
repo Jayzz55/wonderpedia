@@ -18,7 +18,7 @@ class Wiki < ActiveRecord::Base
   end
 
   def premium_access?(user)
-    user.premium == true && self.users.first == user && self.private == true
+    user.premium && self.users.first == user && self.private
   end
 
   def check_exist?(user)

@@ -8,7 +8,7 @@
         = "#{time_ago_in_words(wiki.created_at)} ago"
     %td
       .wiki_status
-        - if wiki.private == false
+        - if !wiki.private
           .label.label-info Public 
         - else
           .label.label-primary Private

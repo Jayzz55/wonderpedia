@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
 
   def user_status
-    self.premium == true ? "Premium user" : "Regular user"
+    self.premium ? "Premium user" : "Regular user"
   end
 
 end
