@@ -38,10 +38,10 @@ describe Wiki do
     end
   end
 
-  describe "checkbox_processing" do
+  describe "update_collaboration" do
     it "returns the parameter of user ids in which new collaborator relationship to be created" do
     captured_params = ["#{@user2.id}"]
-    expect(@private_wiki1.checkbox_processing(captured_params,@user1)).to eq([@user2.id])
+    expect(@private_wiki1.update_collaboration(captured_params,@user1)).to eq([@user2.id])
     end
   end
 end

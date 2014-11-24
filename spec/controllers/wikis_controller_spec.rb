@@ -4,9 +4,9 @@ RSpec.describe WikisController, :type => :controller do
 
   describe "GET show" do
     before do
-      user = create(:user)
-      sign_in user
-      @wiki = Wiki.create(title: "test one", body: "hello world")
+      @user = create(:user_with_wiki)
+      @wiki = @user.wikis.first
+      sign_in @user
       get :show, {id: "test-one"}
     end
 
@@ -26,9 +26,9 @@ RSpec.describe WikisController, :type => :controller do
   describe "GET index" do
     before do
       @user = create(:user)
+      @wiki1 = create(:wiki_with_user, user: @user)
+      @wiki2 = create(:wiki_with_user, title: "test two", body: "hello world again", user: @user)
       sign_in @user
-      @wiki1 = Wiki.create(title: "test one", body: "hello world")
-      @wiki2 = Wiki.create(title: "test two", body: "hello world again")
     end
 
     it "returns http success" do
@@ -78,7 +78,8 @@ RSpec.describe WikisController, :type => :controller do
   describe "DELETE destroy" do
     before do
       @user = create(:user)
-      @user.wikis.create(title: "test one", body: "hello world")
+      @wiki1 = create(:wiki_with_user, user: @user)
+      # @user.wikis.create(title: "test one", body: "hello world")
       sign_in @user
     end
 
@@ -104,39 +105,38 @@ RSpec.describe WikisController, :type => :controller do
     end
   end
 
-  describe "PUT update", focus: true do
+  describe "PUT update" do
     before do
-      user = create(:user)
-      sign_in user 
-      Wiki.create(title: "test one", body: "hello world")
-      @wiki1 = Wiki.first
+      @user = create(:user) 
+      @wiki1 = create(:wiki_with_user, user: @user)
+      sign_in user
     end
 
     context "valid update" do
-      it "located the requested @wiki" do
+      xit "located the requested @wiki" do
         put :update, {id: "test-one"}
         
       end
 
-      it "changes @wiki's attributes" do
+      xit "changes @wiki's attributes" do
 
       end
 
-      it "redirects to the updated contact" do
+      xit "redirects to the updated contact" do
 
       end
     end
 
     context "invalid update" do
-      it "located the requested @wiki" do
+      xit "located the requested @wiki" do
         
       end
 
-      it "does not changes @wiki's attributes" do
+      xit "does not changes @wiki's attributes" do
 
       end
 
-      it "re-renders the edit method" do
+      xit "re-renders the edit method" do
 
       end
     end

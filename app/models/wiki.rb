@@ -35,7 +35,7 @@ class Wiki < ActiveRecord::Base
     return name.join(',')
   end
 
-  def checkbox_processing(captured_params, current_user)
+  def update_collaboration(captured_params, current_user)
     if captured_params.present?
       captured_user_ids = captured_params.map{|a| a.to_i}
       user_ids = captured_user_ids << current_user.id

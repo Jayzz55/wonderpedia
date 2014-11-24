@@ -1,3 +1,7 @@
- class WikiPolicy < ApplicationPolicy
+class WikiPolicy < ApplicationPolicy
 
- end
+  def update_multiple?
+    user.present? && (record.users.include? user)
+  end
+  
+end

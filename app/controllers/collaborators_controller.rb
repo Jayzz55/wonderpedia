@@ -1,17 +1,22 @@
 class CollaboratorsController < ApplicationController
   respond_to :html, :js
 
+  before_action :authenticate_user!
+
   def index
     @wiki = Wiki.friendly.find(params[:wiki_id])
     @collaborator = @wiki.collaborators
     @user = User.where.not(id: current_user.id)
+
+    authorize @wiki
   end
 
   def update_multiple
     wiki = Wiki.friendly.find(params[:wiki_id])
     captured_params = params[:users]
+    authorize wiki
 
-    wiki.checkbox_processing(captured_params, current_user)
+    wiki.update_collaboration(captured_params, current_user)
 
     flash[:notice] = "Collaborators successfully updated."
 
