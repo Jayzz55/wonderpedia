@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 include Warden::Test::Helpers
-Warden.test_mode!
 
 feature 'Editing wiki' do
   scenario "users can edit their own wiki" do

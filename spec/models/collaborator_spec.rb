@@ -1,5 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe Collaborator, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe Collaborator do
+  context "association" do
+    it {should belong_to(:user)}
+    it {should belong_to(:wiki)}
+  end
 end

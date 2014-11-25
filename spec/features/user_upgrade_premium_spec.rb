@@ -43,7 +43,7 @@ feature 'Upgrade to premium',js: true do
     end
 
     #Check that user has paid and upgraded to premium
-    Capybara.using_wait_time(20) do
+    Capybara.using_wait_time(40) do
       expect(page).to have_content("Thanks for all the money, #{user1.email}! Feel free to pay me again.")
       expect(page).to have_content("Premium user")
     end

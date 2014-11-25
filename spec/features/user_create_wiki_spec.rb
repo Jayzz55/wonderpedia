@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 feature 'Create wiki pages using Markdown syntax' do
-  scenario "lets user create to-do list" do
+  scenario "lets user create a wiki" do
     #Go to home page
     user = create(:user)
     visit root_path

@@ -16,7 +16,7 @@
                 %td= user.email
                 %td
                   - value = user.id
-                  - is_checked = @wiki.check_exist?(user)
+                  - is_checked = @wiki.check_user_exist?(user)
                   - options = { id: "user_#{user.id}" }
                   = check_box_tag "users[]", value, is_checked, options
       = submit_tag "Share wiki", class: 'btn btn-primary'

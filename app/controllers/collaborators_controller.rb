@@ -5,7 +5,6 @@ class CollaboratorsController < ApplicationController
 
   def index
     @wiki = Wiki.friendly.find(params[:wiki_id])
-    @collaborator = @wiki.collaborators
     @user = User.where.not(id: current_user.id)
   end
 

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 include Warden::Test::Helpers
-Warden.test_mode!
 
 feature 'Users collaborate on wiki' do
   scenario "authorized users can colloborate on wiki" do
@@ -27,8 +26,8 @@ feature 'Users collaborate on wiki' do
     click_link "Collaborate"
 
     #add user2 as collaborator
-    page.check('user_2')
-    page.check('user_3')
+    check('user_2')
+    check('user_3')
     click_button 'Share wiki'
 
     #check that user2 have been added as collaborators

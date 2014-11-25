@@ -4,9 +4,9 @@ RSpec.describe WikisController, :type => :controller do
 
   describe "GET show" do
     before do
-      @user = create(:user_with_wiki)
-      @wiki = @user.wikis.first
-      sign_in @user
+      user = create(:user_with_wiki)
+      @wiki = user.wikis.first
+      sign_in user
       get :show, {id: "test-one"}
     end
 
@@ -26,8 +26,8 @@ RSpec.describe WikisController, :type => :controller do
   describe "GET index" do
     before do
       @user = create(:user)
-      @wiki1 = create(:wiki_with_user, user: @user)
-      @wiki2 = create(:wiki_with_user, title: "test two", body: "hello world again", user: @user)
+      wiki1 = create(:wiki_with_user, user: @user)
+      wiki2 = create(:wiki_with_user, title: "test two", body: "hello world again", user: @user)
       sign_in @user
     end
 
@@ -49,8 +49,8 @@ RSpec.describe WikisController, :type => :controller do
 
   describe "POST create" do
     before do
-      @user = create(:user)
-      sign_in @user
+      user = create(:user)
+      sign_in user
     end
 
     context "valid wiki"
@@ -77,66 +77,79 @@ RSpec.describe WikisController, :type => :controller do
 
   describe "DELETE destroy" do
     before do
-      @user = create(:user)
-      @wiki1 = create(:wiki_with_user, user: @user)
-      # @user.wikis.create(title: "test one", body: "hello world")
-      sign_in @user
+      user = create(:user)
+      wiki1 = create(:wiki_with_user, user: user)
+      sign_in user
     end
 
-    it "raise exception for deleting unknown id" do
-      expect { delete :destroy, { id: '' } }.to raise_error(ActiveRecord::RecordNotFound)
+    context "valid deletion" do
+      it "deletes the wiki" do
+        delete :destroy, {id: "test-one"}
+        expect(Wiki.count).to eq(0)
+      end
+
+      it "redirects to wikis index" do
+        delete :destroy, {id: "test-one"} 
+        expect(response).to redirect_to wikis_path
+      end 
     end
 
-    it "deletes the wiki" do
-      delete :destroy, {id: "test-one"}
-      expect(Wiki.count).to eq(0)
-    end
+    context "invalid deletion" do
+      it "raise exception for deleting unknown id" do
+        expect { delete :destroy, { id: '' } }.to raise_error(ActiveRecord::RecordNotFound)
+      end
 
-    it "cannot delete other user's wiki" do
-      other_user = create(:user)
-      other_user.wikis.create(title: "test two", body: "hello world again")
-      delete :destroy, {id: "test-two"}
-      expect(Wiki.count).to eq(2)
+      it "cannot delete other user's wiki" do
+        attacker = create(:user)
+        create(:wiki_with_user,title: "test two", body: "hello world again", user: attacker)
+        delete :destroy, {id: "test-two"}
+        expect(Wiki.count).to eq(2)
+      end
     end
     
-    it "redirects to wikis index" do
-      delete :destroy, {id: "test-one"} 
-      expect(response).to redirect_to wikis_path
-    end
   end
 
   describe "PUT update" do
     before do
       @user = create(:user) 
       @wiki1 = create(:wiki_with_user, user: @user)
-      sign_in user
+      sign_in @user
     end
 
     context "valid update" do
-      xit "located the requested @wiki" do
-        put :update, {id: "test-one"}
-        
+      before do
+        put :update, {id: "test-one", wiki: {title:"test update", body:"testing updated"}}
       end
 
-      xit "changes @wiki's attributes" do
-
+      it "located the requested @wiki" do
+        expect(assigns(:wiki)).to eq(@wiki1) 
       end
 
-      xit "redirects to the updated contact" do
+      it "changes @wiki's attributes" do
+        expect(Wiki.first.title).to eq("test update")
+        expect(Wiki.first.body).to eq("testing updated")
+      end
 
+      it "redirects to the updated contact" do
+        expect(response).to redirect_to wikis_path
       end
     end
 
     context "invalid update" do
-      xit "located the requested @wiki" do
-        
+
+      it "does not changes @wiki's attributes" do
+        put :update, {id: "test-one", wiki: {title:"", body:"testing updated"}}
+        expect(Wiki.first.title).not_to eq("test update")
+        expect(Wiki.first.body).not_to eq("testing updated")
       end
 
-      xit "does not changes @wiki's attributes" do
-
-      end
-
-      xit "re-renders the edit method" do
+      it "cannot update other user's wiki" do
+        sign_out @user
+        attacker = create(:user) 
+        sign_in attacker
+        put :update, {id: "test-one", wiki: {title:"test update", body:"testing updated"}}
+        expect(Wiki.first.title).not_to eq("test update")
+        expect(Wiki.first.body).not_to eq("testing updated")
 
       end
     end

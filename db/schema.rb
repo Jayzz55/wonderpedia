@@ -27,7 +27,6 @@ ActiveRecord::Schema.define(version: 20141114070147) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.boolean  "premium",                default: false
-    t.boolean  "boolean",                default: false
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
@@ -54,7 +53,6 @@ ActiveRecord::Schema.define(version: 20141114070147) do
     t.string   "title"
     t.text     "body"
     t.boolean  "private",    default: false
-    t.boolean  "boolean",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"

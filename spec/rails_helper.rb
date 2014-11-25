@@ -6,6 +6,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 require "capybara/poltergeist" 
+require 'shoulda/matchers'
 
 Capybara.javascript_driver = :poltergeist
 
@@ -53,8 +54,5 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
-
-  # Make Factory Girl's methods avilable
-  config.include FactoryGirl::Syntax::Methods
 
 end

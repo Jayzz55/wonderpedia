@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 include Warden::Test::Helpers
-Warden.test_mode!
 
 feature 'Add collaborators' do
   scenario "users can add collaborators on a wiki" do
@@ -35,8 +34,8 @@ feature 'Add collaborators' do
     end
 
     #add user2 and user3 as collaborators
-    page.check('user_2')
-    page.check('user_3')
+    check('user_2')
+    check('user_3')
     click_button 'Share wiki'
 
     #check that user2 and user3 have been added as collaborators

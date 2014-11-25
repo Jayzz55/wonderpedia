@@ -16,6 +16,7 @@ group :development do
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.1.0'
+  gem 'shoulda-matchers', require: false
   gem 'capybara'
   gem 'pry-rails'
 end

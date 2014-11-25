@@ -5,28 +5,35 @@ class Wiki < ActiveRecord::Base
   has_many :users, through: :collaborators
   has_many :collaborators
 
-  default_scope { order('created_at DESC') }
+  # default_scope { order('wikis.created_at DESC') }
+  default_scope { order(created_at: :desc) }
 
   validates :body, length: { minimum: 5 }, presence: true
   validates :title, length: { minimum: 5 }, presence: true
 
   def self.viewable(user)
-    wiki_collab = Collaborator.where(user_id: user.id)
-    select_wiki = Wiki.where(id: wiki_collab.pluck(:wiki_id), :private => true)
-    public_wiki = Wiki.where(:private => false)
-    return select_wiki + public_wiki
+    Wiki.includes(:collaborators).where(
+      "private = ? OR (private = ? AND collaborators.user_id = ?)", 
+      false, true, user.id
+    ).references(:collaborators)
+
+    # This is only for information of the old code.
+    # wiki_collab = Collaborator.where(user_id: user.id)
+    # select_wiki = Wiki.where(id: wiki_collab.pluck(:wiki_id), :private => true)
+    # public_wiki = Wiki.where(:private => false)
+    # return select_wiki + public_wiki
   end
 
   def premium_access?(user)
-    user.premium && self.users.first == user && self.private
+    user.premium && self.is_creator?(user) && self.private
   end
 
-  def check_exist?(user)
-    if self.users.include? user
-      return true
-    else
-      return false
-    end
+  def is_creator?(user)
+    self.users.first == user
+  end
+
+  def check_user_exist?(user)
+    self.users.include? user
   end
 
   def collaborators_name
